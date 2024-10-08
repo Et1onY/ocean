@@ -22,6 +22,11 @@ const activeName = ref('first')
         <el-tab-pane label="代码">
             <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
                 <el-tab-pane label="最近访问" name="first">
+                    <div class="dd1">
+                        <img src="/src/static/images/4.png">
+                    </div>
+                </el-tab-pane>
+                <el-tab-pane label="全部仓库" name="second">
                     <div class="dd1"><svg width="168" height="128" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <defs>
@@ -120,10 +125,7 @@ const activeName = ref('first')
                                     </g>
                                 </g>
                             </g>
-                        </svg></div>
-                </el-tab-pane>
-                <el-tab-pane label="全部仓库" name="second">
-                    <div class="dd1"><svg width="168" height="128" xmlns="http://www.w3.org/2000/svg"
+                        </svg><svg width="168" height="128" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <defs>
                                 <filter x="-3.7%" y="-4.2%" width="107.4%" height="110.4%"
@@ -280,10 +282,7 @@ const activeName = ref('first')
                                         height="2" rx="1" />
                                 </g>
                             </g>
-                        </svg></div>
-                </el-tab-pane>
-                <el-tab-pane label="开源仓库" name="third">
-                    <div class="dd1"><svg width="168" height="128" xmlns="http://www.w3.org/2000/svg"
+                        </svg><svg width="168" height="128" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <defs>
                                 <filter x="-3.7%" y="-4.2%" width="107.4%" height="110.4%"
@@ -418,6 +417,9 @@ const activeName = ref('first')
                                 </g>
                             </g>
                         </svg></div>
+                </el-tab-pane>
+                <el-tab-pane label="开源仓库" name="third">
+                    <div class="dd1"><img src="/src/static/images/4.png"></div>
                 </el-tab-pane>
             </el-tabs>
         </el-tab-pane>
