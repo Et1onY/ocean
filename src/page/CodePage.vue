@@ -4,7 +4,7 @@ import type { DrawerProps, TabsPaneContext } from 'element-plus'
 const drawer = ref(false);
 const direction = ref<DrawerProps['direction']>('ltr')
 const handleClick = (tab: TabsPaneContext, event: Event) => {
-    if (tab.uid == 27) {
+    if (tab.uid == 20) {
         drawer.value = true;
     }
     console.log(tab.uid, event);
