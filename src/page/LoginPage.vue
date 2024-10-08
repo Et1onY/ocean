@@ -1,23 +1,27 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from "axios";
-const input = ref('')
-const inputpsw = ref('')
+const router = useRouter();
 const giteedata = ref({
-    grant_type: '',
-    username: '1011542415@qq.com',
-    password: '2004817Lcz.',
+    grant_type: 'password',
+    username: '',
+    password: '',
     client_id: '194ce973ee99f056972aedc365aeb1e4fdf5b2bf38ef00b52698951a1e9ea1b9',
     client_secret: '52ac8afc8cc90c1c8cd0ce5319a0a1b17a0da3641b52de9dca365143972812fa',
     scope: 'projects'
 });
 const handleClick = () => {
-    axios.post('https://gitee.com/oauth/token', giteedata)
+    axios.post('https://gitee.com/oauth/token', giteedata.value)
         .then((res) => {
-            console.log(res);
+            if (res.data.access_token != '') {
+                router.push('/CodePage');
+            } else {
+                console.log("登录出现错误");
+            }
+            console.log(res.data.access_token);
         }).catch((err) => {
             console.log(err);
-
         })
 };
 </script>
@@ -33,10 +37,10 @@ const handleClick = () => {
                 </div>
                 <div class="textinput">
                     <p>
-                        <el-input v-model="input" style="width: 350px; height: 50px;" placeholder="账号" />
+                        <el-input v-model="giteedata.username" style="width: 350px; height: 50px;" placeholder="账号" />
                     </p>
                     <p>
-                        <el-input v-model="inputpsw" style="width: 350px; height: 50px;" type="password"
+                        <el-input v-model="giteedata.password" style="width: 350px; height: 50px;" type="password"
                             placeholder="密码" show-password />
                     </p>
                 </div>

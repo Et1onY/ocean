@@ -1,7 +1,6 @@
 <script setup>
-import LoginPage from './page/LoginPage.vue';
 </script>
 <template>
-    <LoginPage></LoginPage>
+    <router-view></router-view>
 </template>
 <style scoped></style>
