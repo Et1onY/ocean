@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
+import { useRoute } from 'vue-router';
 import {
     Document,
     Menu as IconMenu,
@@ -11,7 +12,8 @@ const handleOpen = (key: string, keyPath: string[]) => {
 }
 const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
-}
+};
+const route = useRoute();
 const tabber = ref([
     { id: 1, name: "工作台", icons: "icon-park-outline:workbench" },
     { id: 2, name: "项目", icons: "lsicon:folder-outline" },
@@ -64,11 +66,19 @@ const form = reactive({
     type: [],
     resource: '',
     desc: '',
+});
+const query = route.query.data1;
+const formdata = ref({
+    access_token: query,
+    name: '',
+    gitignore_template: 'Git Ignore',
+    license_template: 'License',
+    private: true
 })
-
 const onSubmit = () => {
     console.log('submit!')
-}
+};
+
 </script>
 <template>
     <div class="header">
@@ -555,6 +565,7 @@ const onSubmit = () => {
                 </div>
             </footer>
             <article style="height: 75vh;" v-if="switchcode">
+                <h1>创建代码仓库</h1>
                 <el-form :model="form" label-width="auto"
                     style="max-width: 600px;display: flex;flex-direction: column;justify-content: space-around;height: 75vh;margin-left: 5vw;">
                     <el-form-item label="所属项目:">

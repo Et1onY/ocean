@@ -11,11 +11,13 @@ const giteedata = ref({
     client_secret: '52ac8afc8cc90c1c8cd0ce5319a0a1b17a0da3641b52de9dca365143972812fa',
     scope: 'projects'
 });
+const tokendata = ref();
 const handleClick = () => {
     axios.post('https://gitee.com/oauth/token', giteedata.value)
         .then((res) => {
             if (res.data.access_token != '') {
-                router.push('/CodePage');
+                tokendata.value = res.data.access_token;
+                router.push({ path: '/CodePage', query: { data1: tokendata.value } });
             } else {
                 alert("登录出现错误");
             }
