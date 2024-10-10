@@ -1,5 +1,17 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from "vue";
+import {
+    Document,
+    Menu as IconMenu,
+    Location,
+    Setting,
+} from '@element-plus/icons-vue'
+const handleOpen = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath)
+}
+const handleClose = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath)
+}
 const tabber = ref([
     { id: 1, name: "工作台", icons: "icon-park-outline:workbench" },
     { id: 2, name: "项目", icons: "lsicon:folder-outline" },
@@ -15,6 +27,7 @@ const tabber = ref([
 const isActive = ref(new Array(tabber.value.length).fill(false));
 const isActivees = ref();
 const fonttext = ref("");
+const drawer = ref(false);
 function defultdata() {
     isActive.value[0] = true;
     fonttext.value = tabber.value[0].name;
@@ -32,6 +45,9 @@ const handclick = (item, index) => {
     } else {
         isActivees.value = false;
     }
+    if (index === 9) {
+        drawer.value = true
+    }
 };
 
 </script>
@@ -48,7 +64,7 @@ const handclick = (item, index) => {
             <h1>{{ fonttext }}</h1>
             <footer>
                 <div class="footerlist" v-show="isActivees">
-                    <el-tabs class="listtab" type="border-card">
+                    <el-tabs class="listtab">
                         <el-tab-pane class="listtabss" label="最近访问">
                             <div style="display: flex;align-items: center;flex-direction: column;"><img
                                     src="../static/images/4.png" alt="">暂无数据</div>
@@ -519,7 +535,48 @@ const handclick = (item, index) => {
                 </div>
             </footer>
         </section>
-
+        <el-drawer v-model="drawer" direction="ltr">
+            <el-col :span="12">
+                <h5 class="mb-2">Default colors</h5>
+                <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+                    <el-sub-menu index="1">
+                        <template #title>
+                            <el-icon>
+                                <location />
+                            </el-icon>
+                            <span>Navigator One</span>
+                        </template>
+                        <el-menu-item-group title="Group One">
+                            <el-menu-item index="1-1">个人账户</el-menu-item>
+                            <el-menu-item index="1-2">服务订单</el-menu-item>
+                        </el-menu-item-group>
+                        <el-menu-item-group title="Group Two">
+                            <el-menu-item index="1-3">邀请成员</el-menu-item>
+                        </el-menu-item-group>
+                        <el-sub-menu index="1-4">
+                            <template #title>切换语言</template>
+                            <el-menu-item index="1-4-1">工单中心</el-menu-item>
+                        </el-sub-menu>
+                    </el-sub-menu>
+                    <el-menu-item index="2">
+                        <el-icon><icon-menu /></el-icon>
+                        <span>更新日志</span>
+                    </el-menu-item>
+                    <el-menu-item index="3" disabled>
+                        <el-icon>
+                            <document />
+                        </el-icon>
+                        <span>Navigator Three</span>
+                    </el-menu-item>
+                    <el-menu-item index="4">
+                        <el-icon>
+                            <setting />
+                        </el-icon>
+                        <span>设置</span>
+                    </el-menu-item>
+                </el-menu>
+            </el-col>
+        </el-drawer>
     </div>
 </template>
 <style scoped>
@@ -564,9 +621,6 @@ h1 {
 }
 
 .listtab {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     height: 75vh;
     border-bottom: none;
 }
@@ -577,10 +631,6 @@ h1 {
     align-items: center;
     width: 90vw;
     height: 75vh;
-}
-
-.el-tabs__item {
-    color: black;
 }
 
 p {
