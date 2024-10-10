@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import {
     Document,
     Menu as IconMenu,
@@ -49,7 +49,26 @@ const handclick = (item, index) => {
         drawer.value = true
     }
 };
+const switchfun = ref(true);
+const switchcode = ref(false);
+const createcode = () => {
+    switchfun.value = false;
+    switchcode.value = true;
+};
+const form = reactive({
+    name: '',
+    region: '',
+    date1: '',
+    date2: '',
+    delivery: false,
+    type: [],
+    resource: '',
+    desc: '',
+})
 
+const onSubmit = () => {
+    console.log('submit!')
+}
 </script>
 <template>
     <div class="header">
@@ -62,7 +81,7 @@ const handclick = (item, index) => {
         </header>
         <section>
             <h1>{{ fonttext }}</h1>
-            <footer>
+            <footer v-if="switchfun">
                 <div class="footerlist" v-show="isActivees">
                     <el-tabs class="listtab">
                         <el-tab-pane class="listtabss" label="最近访问">
@@ -524,7 +543,8 @@ const handclick = (item, index) => {
                                         <p>发布，标记代码版本</p>
                                     </div>
                                 </div>
-                                <el-button type="info" color="black" style="margin: 50px 0 0 0;">创建代码仓库</el-button>
+                                <el-button type="info" color="black" style="margin: 50px 0 0 0;"
+                                    @click="createcode">创建代码仓库</el-button>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane class="listtabss" label="开源仓库">
@@ -534,6 +554,50 @@ const handclick = (item, index) => {
                     </el-tabs>
                 </div>
             </footer>
+            <article style="height: 75vh;" v-if="switchcode">
+                <el-form :model="form" label-width="auto"
+                    style="max-width: 600px;display: flex;flex-direction: column;justify-content: space-around;height: 75vh;margin-left: 5vw;">
+                    <el-form-item label="所属项目:">
+                        <el-input v-model="form.name" placeholder="所属项目" />
+                    </el-form-item>
+                    <el-form-item label="仓库类型:">
+                        <el-select v-model="form.region" placeholder="请选择类型">
+                            <el-option label="git仓库" value="shanghai" />
+                            <el-option label="git仓库" value="shanghai" />
+                            <el-option label="git仓库" value="beijing" />
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="仓库名称:">
+                        <el-input v-model="form.name" placeholder="仓库名只支持字母，数字，下划线(_)中线(-)和.的组合" />
+                    </el-form-item>
+                    <el-form-item label="仓库描述:">
+                        <el-input v-model="form.desc" placeholder="请输入仓库描述" type="textarea" />
+                    </el-form-item>
+                    <el-form-item label="初始化仓库:">
+                        <el-checkbox-group v-model="form.type">
+                            <el-checkbox value="Online activities" name="type">
+                                生成README
+                            </el-checkbox>
+                            <el-checkbox value="Promotion activities" name="type">
+                                添加 .gitignore
+                            </el-checkbox>
+                            <el-checkbox value="Offline activities" name="type">
+                                添加分支模型（仓库创建后将根据所选模型创建分支）
+                            </el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="是否开源:">
+                        <el-radio-group v-model="form.resource">
+                            <el-radio value="Sponsor">私有仓库</el-radio>
+                            <el-radio value="Venue">公开仓库</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">完成创建</el-button>
+                        <el-button>取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </article>
         </section>
         <el-drawer v-model="drawer" direction="ltr">
             <el-col :span="12">
