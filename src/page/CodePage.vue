@@ -6,7 +6,8 @@ import {
     Menu as IconMenu,
     Location,
     Setting,
-} from '@element-plus/icons-vue'
+} from '@element-plus/icons-vue';
+import axios from "axios";
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
 }
@@ -66,16 +67,33 @@ const form = reactive({
     type: [],
     resource: '',
     desc: '',
+    bigname: 'abc'
 });
 const query = route.query.data1;
 const formdata = ref({
-    access_token: query,
-    name: '',
-    gitignore_template: 'Git Ignore',
-    license_template: 'License',
+    access_token: '5a98fa466459787ddfbe7dd7dba79d24',
+    name: 'abc123',
+    description: 'qwerror123',
+    homepage: 'https://gitee.com',
+    has_issues: true,
+    has_wiki: true,
+    can_comment: true,
+    auto_init: false,
+    gitignore_template: 'Ada',
+    license_template: 'ISC',
+    path: 'qwerccc',
     private: true
 })
+console.log(formdata.value.access_token);
+
 const onSubmit = () => {
+    // formdata.value.name = form.bigname
+    axios.post('https://gitee.com/oauth/token', formdata.value)
+        .then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
     console.log('submit!')
 };
 
@@ -569,7 +587,7 @@ const onSubmit = () => {
                 <el-form :model="form" label-width="auto"
                     style="max-width: 600px;display: flex;flex-direction: column;justify-content: space-around;height: 75vh;margin-left: 5vw;">
                     <el-form-item label="所属项目:">
-                        <el-input v-model="form.name" placeholder="所属项目" />
+                        <el-input v-model="form.bigname" placeholder="所属项目" />
                     </el-form-item>
                     <el-form-item label="仓库类型:">
                         <el-select v-model="form.region" placeholder="请选择类型">
